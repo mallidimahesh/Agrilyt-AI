@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Agrilyt Ai - Intelligent Price Forecasting & Stabilization Platform for Essential Commodities">
+    <title>Agrilyt Ai - Intelligent Price Forecasting</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+    <!-- ════════════════════════════════════════════
+         SCREEN 1 – Login / Signup
+         ════════════════════════════════════════════ -->
+    <div id="screen-auth" class="screen active">
+        <div class="auth-wrapper">
+            <div class="auth-card">
+                <div class="auth-logo">
+                    <svg width="56" height="56" viewBox="0 0 40 40" fill="none">
+                        <rect width="40" height="40" rx="12" fill="url(#g1)" />
+                        <path d="M20 10L28 16V24L20 30L12 24V16L20 10Z" fill="white" opacity="0.9" />
+                        <defs>
+                            <linearGradient id="g1" x1="0" y1="0" x2="40" y2="40">
+                                <stop offset="0%" style="stop-color:#22c55e" />
+                                <stop offset="100%" style="stop-color:#16a34a" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <h1>Agrilyt Ai</h1>
+                    <p class="tagline">Intelligent Price Forecasting & Stabilization Platform for Essential Commodities
+                    </p>
+                </div>
+
+                <!-- Toggle -->
+                <div class="auth-toggle">
+                    <button id="toggle-login" class="toggle-btn active" onclick="showAuthForm('login')">Login</button>
+                    <button id="toggle-signup" class="toggle-btn" onclick="showAuthForm('signup')">Sign Up</button>
+                </div>
+
+                <!-- Login Form -->
+                <form id="login-form" class="auth-form" onsubmit="handleLogin(event)">
+                    <div class="input-group">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" placeholder="you@example.com" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="auth-submit-btn">
+                        <span>Login</span>
+                        <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+                            <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" />
+                        </svg>
+                    </button>
+                    <p id="login-error" class="auth-error"></p>
+                </form>
+
+                <!-- Signup Form -->
+                <form id="signup-form" class="auth-form" style="display:none" onsubmit="handleSignup(event)">
+                    <div class="input-group">
+                        <label for="signup-name">Full Name</label>
+                        <input type="text" id="signup-name" placeholder="John Doe" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="signup-email">Email</label>
+                        <input type="email" id="signup-email" placeholder="you@example.com" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" placeholder="••••••••" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="signup-type">I am a</label>
+                        <div class="role-selector">
+                            <label class="role-option">
+                                <input type="radio" name="user_type" value="consumer" checked>
+                                <span class="role-chip consumer-chip">🛒 Consumer</span>
+                            </label>
+                            <label class="role-option">
+                                <input type="radio" name="user_type" value="farmer">
+                                <span class="role-chip farmer-chip">🌾 Farmer</span>
+                            </label>
+                            <label class="role-option">
+                                <input type="radio" name="user_type" value="govt">
+                                <span class="role-chip govt-chip">🏛️ Govt Body</span>
+                            </label>
+                        </div>
+                    </div>
+                    <button type="submit" class="auth-submit-btn">
+                        <span>Create Account</span>
+                        <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+                            <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" />
+                        </svg>
+                    </button>
+                    <p id="signup-error" class="auth-error"></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════
+         SCREEN 2 – City Selection & Highlights
+         ════════════════════════════════════════════ -->
+    <div id="screen-city" class="screen">
+        <!-- Top Bar -->
+        <header class="top-bar">
+            <div class="top-bar-left">
+                <svg width="32" height="32" viewBox="0 0 40 40" fill="none">
+                    <rect width="40" height="40" rx="12" fill="url(#g2)" />
+                    <path d="M20 10L28 16V24L20 30L12 24V16L20 10Z" fill="white" opacity="0.9" />
+                    <defs>
+                        <linearGradient id="g2" x1="0" y1="0" x2="40" y2="40">
+                            <stop offset="0%" style="stop-color:#22c55e" />
+                            <stop offset="100%" style="stop-color:#16a34a" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span class="top-bar-title">AgriPrice Predictor</span>
+            </div>
+            <div class="top-bar-right">
+                <div id="user-badge" class="user-badge"></div>
+                <button class="logout-btn" onclick="handleLogout()">Logout</button>
+            </div>
+        </header>
+
+        <main class="city-main">
+            <div class="container">
+                <h2 class="section-heading" id="city-heading">Select Your City</h2>
+                <p class="section-sub" id="city-sub">Choose a major city or search for any custom market...</p>
+
+                <div id="city-search-wrapper" class="city-search-container">
+                    <div class="search-inner">
+                        <input type="text" id="city-search-input"
+                            placeholder="Search major cities or enter custom market name..."
+                            onkeyup="handleCitySearch(event)">
+                        <button class="search-go-btn" onclick="handleCustomCitySubmit()">
+                            <span>Go</span>
+                            <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+                                <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="2.5"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="city-grid" id="city-grid">
+                    <!-- Cities injected by JS -->
+                </div>
+
+                <!-- Highlights Panel (shown after city selection) -->
+                <div id="highlights-panel" class="highlights-panel" style="display:none">
+                    <div class="highlights-header">
+                        <button class="back-btn" onclick="handleBackToCity()">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M16 10H4M4 10L9 5M4 10L9 15" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" />
+                            </svg>
+                            Back
+                        </button>
+                        <h2 id="highlights-city-name">City Highlights</h2>
+                        <div class="select-wrapper highlights-commodity-wrapper">
+                            <select id="highlights-commodity-select"
+                                onchange="handleHighlightCommodityChange(this.value)">
+                                <option value="">All Commodities</option>
+                                <option value="Rice">Rice</option>
+                                <option value="Wheat">Wheat</option>
+                                <option value="Maize">Maize</option>
+                                <option value="Onion">Onion</option>
+                                <option value="Tomato">Tomato</option>
+                                <option value="Potato">Potato</option>
+                                <option value="Lemon">Lemon</option>
+                                <option value="Foxtail Millet">Foxtail Millet</option>
+                                <option value="Large Cardamom">Large Cardamom</option>
+                                <option value="Jaggery">Jaggery</option>
+                                <option value="Cotton">Cotton</option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <p class="highlights-sub" id="highlights-sub">Commodities with predicted price changes</p>
+                    <div class="highlights-grid" id="highlights-grid">
+                        <!-- Highlight cards injected by JS -->
+                    </div>
+                    <div id="highlights-loading" class="loading-state" style="display:none">
+                        <div class="spinner"></div>
+                        <p>Scanning commodities for price highlights…</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- ════════════════════════════════════════════
+         SCREEN 3 – Commodity Statistics (Original Layout)
+         ════════════════════════════════════════════ -->
+    <div id="screen-stats" class="screen">
+        <!-- Top Bar -->
+        <header class="top-bar">
+            <div class="top-bar-left">
+                <button class="back-btn" onclick="handleBackToCityFromStats()">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M16 10H4M4 10L9 5M4 10L9 15" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" />
+                    </svg>
+                    Back
+                </button>
+            </div>
+            <div class="top-bar-center">
+                <span id="stats-city-label" class="stats-city-label"></span>
+            </div>
+            <div class="top-bar-right">
+                <div class="stats-commodity-container">
+                    <div class="select-wrapper stats-commodity-wrapper">
+                        <select id="stats-commodity-select" onchange="handleCommodityChange(this.value)">
+                            <option value="Rice">Rice</option>
+                            <option value="Wheat">Wheat</option>
+                            <option value="Maize">Maize</option>
+                            <option value="Onion">Onion</option>
+                            <option value="Tomato">Tomato</option>
+                            <option value="Potato">Potato</option>
+                            <option value="Lemon">Lemon</option>
+                            <option value="Foxtail Millet">Foxtail Millet</option>
+                            <option value="Large Cardamom">Large Cardamom</option>
+                            <option value="Jaggery">Jaggery</option>
+                            <option value="Cotton">Cotton</option>
+                        </select>
+                    </div>
+                    <button class="get-data-btn" onclick="handleGetStats()">
+                        <span>Get</span>
+                        <svg width="14" height="14" viewBox="0 0 20 20" fill="none">
+                            <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="2.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                </div>
+                <div id="user-badge-stats" class="user-badge"></div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="container">
+                <!-- Stock & Supply Data Section -->
+                <section class="stock-supply-section" id="stock-supply-section" style="display: none;">
+                    <div class="stock-supply-header">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22c55e"
+                                stroke-width="2">
+                                <path d="M20 7L12 3L4 7M20 7L12 11M20 7V17L12 21M12 11L4 7M12 11V21M4 7V17L12 21" />
+                            </svg>
+                            <h2 style="margin:0; font-size: 1.1rem; color: var(--color-text-primary, #e2e8f0);">Stock
+                                &amp; Supply Data</h2>
+                        </div>
+                        <span class="badge" id="stock-data-badge"
+                            style="background: rgba(34, 197, 94, 0.1); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.2);">Live</span>
+                    </div>
+                    <div class="stock-supply-grid" id="stock-supply-grid">
+                        <!-- Cards injected by JS -->
+                    </div>
+                </section>
+
+                <!-- Loading State -->
+                <div class="loading-state" id="stats-loading" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>Analyzing weather patterns and market data...</p>
+                </div>
+
+                <!-- Results Section (original layout) -->
+                <section class="results-section" id="stats-results">
+
+                    <!-- Role-Based Suggestion Banner -->
+                    <div class="role-suggestion-banner" id="role-suggestion"></div>
+
+                    <!-- Weather Card -->
+                    <div class="info-card weather-card">
+                        <div class="card-header">
+                            <h2>Current Weather Conditions</h2>
+                            <span class="badge" id="weather-status">Live</span>
+                        </div>
+                        <div class="weather-content" id="weather-content">
+                            <!-- Weather info will be inserted here -->
+                        </div>
+                    </div>
+
+                    <!-- Price Chart Card -->
+                    <div class="chart-card">
+                        <div class="card-header">
+                            <h2>Price Forecast Analysis</h2>
+                            <div class="chart-legend">
+                                <span class="legend-item">
+                                    <span class="legend-dot historical"></span>
+                                    Historical
+                                </span>
+                                <span class="legend-item">
+                                    <span class="legend-dot predicted"></span>
+                                    Predicted
+                                </span>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="priceChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Climatic Influence Chart Card -->
+                    <div class="chart-card" style="margin-top: 2rem;">
+                        <div class="card-header">
+                            <h2>Climatic Influence Analysis</h2>
+                            <div class="chart-legend">
+                                <span class="legend-item">
+                                    <span class="legend-dot" style="background: #ef4444;"></span>
+                                    Price
+                                </span>
+                                <span class="legend-item">
+                                    <span class="legend-dot" style="background: #3b82f6;"></span>
+                                    Temp (°C)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="climateChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Macro-Economic Factors Grid -->
+                    <div class="macro-grid" id="macro-grid" style="display: none; margin-top: 2rem;">
+                        <h2 style="grid-column: 1 / -1; margin-bottom: 1rem;">Macro-Economic Factors</h2>
+                        <!-- Cards injected by JS -->
+                    </div>
+
+                    <!-- Predictions Grid -->
+                    <div class="predictions-grid" id="predictions-grid">
+                        <!-- Prediction cards will be inserted here -->
+                    </div>
+                    <!-- Insights Card -->
+                    <div class="info-card insights-card">
+                        <div class="card-header">
+                            <h2>Market Insights</h2>
+                        </div>
+                        <div class="insights-content" id="insights-content">
+                            <!-- Insights will be inserted here -->
+                        </div>
+                    </div>
+                    <!-- Verified Intervention Ledger (Blockchain) -->
+                    <section class="blockchain-section" id="blockchain-ledger" style="margin-top: 3rem;">
+                        <div class="card-header"
+                            style="display: flex; align-items: center; justify-content: space-between;">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22c55e"
+                                    stroke-width="2">
+                                    <path d="M12 2L2 7L12 12L22 7L12 2Z" />
+                                    <path d="M2 17L12 22L22 17" />
+                                    <path d="M2 12L12 17L22 12" />
+                                </svg>
+                                <h2>Verified Intervention Ledger</h2>
+                            </div>
+                            <span class="badge"
+                                style="background: rgba(34, 197, 94, 0.1); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.2);">Immutable
+                                Blockchain Data</span>
+                        </div>
+                        <div class="ledger-container" id="blockchain-container">
+                            <div class="loading-state">
+                                <p>Connecting to blockchain nodes...</p>
+                            </div>
+                        </div>
+                    </section>
+
+
+                </section>
+            </div>
+        </main>
+
+        <!-- Debug Console (original) -->
+        <div id="debug-console" style="
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #1e293b;
+            color: #fff;
+            font-family: monospace;
+            padding: 10px;
+            height: 150px;
+            overflow-y: auto;
+            border-top: 2px solid #334155;
+            z-index: 9999;
+            font-size: 12px;
+            opacity: 0.9;
+            display: none;">
+            <div style="font-weight: bold; margin-bottom: 5px;">Debug Log</div>
+            <div id="debug-content">Waiting for action...</div>
+        </div>
+    </div>
+
+    <script src="app.js?v=20260214b"></script>
+</body>
+
+</html>
